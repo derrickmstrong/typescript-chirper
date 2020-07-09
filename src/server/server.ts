@@ -1,19 +1,19 @@
-import * as path from 'path';
-import * as express from 'express';
-// Import the entire Routes folder and searches for the index.js file
-import apiRouter from './routes';
+import * as express from "express";
+import apiRouter from "./routes";
+import * as path from 'path'
 
-let app = express();
+const app = express();
 
-// Middleware
-app.use(express.json()); // Same as body-parser
+app.use(express.static("public"));
 
-// Middleware for Client
-let clientPath = path.join(__dirname, '../client');
-app.use(express.static(clientPath));
+//parses incoming data correctly
+app.use(express.json());
 
-// Middleware Routers
-app.use('/api', apiRouter);
+//uses routes folder (hover over import path to see specifics)
+app.use("/api", apiRouter);
 
-// Listen on localhost:3000/
-app.listen(3000);
+//allows react router to work without interference from express's GET attempts
+app.get('*', (req, res) => res.sendFile(path.join(__dirname, '../public/index.html')))
+
+const port = process.env.PORT || 3000;
+app.listen(port, () => console.log(`Server listening on port: ${port}`));

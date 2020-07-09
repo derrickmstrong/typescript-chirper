@@ -1,9 +1,8 @@
-import * as express from 'express';
-// Import all the routes (get, post, put, delete) from chirps.js
-import chirpsRouter from './chirps';
+import { Router } from 'express'
+import chirpsRouter from './chirps'
 
-let router = express.Router();
+const router = Router()
 
-router.use('/chirps', chirpsRouter);
+router.use('/chirps', chirpsRouter)
 
 export default router;
